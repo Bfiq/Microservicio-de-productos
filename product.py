@@ -15,3 +15,17 @@ class Product:
     
     def add(self, data):
         return self.collection.insert_one(data).inserted_id
+    
+    def update(self, id, data, partial=True):
+        if partial:
+            update = self.collection.update_one(
+                {"_id": ObjectId(id)},
+                {"$set": data}
+            )
+        else:
+            update = self.collection.update_one(
+                {"_id": ObjectId(id)},
+                data
+            )
+
+        return update.modified_count

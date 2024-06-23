@@ -28,5 +28,21 @@ def add_product():
     productId = productModel.add(newProduct)
     return jsonify({"id":str(productId)}), 201
 
+@app.route("/products/<productId>", methods=['PATCH'])
+def update_partial_product(productId):
+    data = request.json
+    updatedCount = productModel.update(productId,data,partial=True)
+    if updatedCount > 0:
+        return jsonify({"message":"Producto actualizado"}), 200
+    return jsonify({"message":"Error al actualizar el producto"}), 404
+
+@app.route("/products/<productId>", methods=['PUT'])
+def update_full_product(productId):
+    data = request.json
+    updatedCount = productModel.update(productId,data,partial=False)
+    if updatedCount > 0:
+        return jsonify({"message":"Producto actualizado"}), 200
+    return jsonify({"message":"Error al actualizar el producto"}), 404
+
 if __name__ == '__main__':
     app.run(debug=True)
