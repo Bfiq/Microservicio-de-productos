@@ -126,4 +126,4 @@ def delete():
     return jsonify({"message":"Metodo no permitido"}), 405
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
